@@ -66,7 +66,7 @@ def prk_step(model, x, t_1, t_2, extra_args):
     x_2, _ = transfer(x, eps_2, t_1, t_mid)
     eps_3 = eps_model_fn(x_2, t_mid * ts, **extra_args)
     x_3, _ = transfer(x, eps_3, t_1, t_2)
-    eps_4 = eps_model_fn(x, t_2 * ts, **extra_args)
+    eps_4 = eps_model_fn(x_3, t_2 * ts, **extra_args)
     eps_prime = (eps_1 + 2 * eps_2 + 2 * eps_3 + eps_4) / 6
     x_new, pred = transfer(x, eps_prime, t_1, t_2)
     return x_new, eps_prime, pred
@@ -135,7 +135,7 @@ def main():
                    help='the output image size')
     p.add_argument('--starting-timestep', '-st', type=float, default=0.9,
                    help='the timestep to start at (used with init images)')
-    p.add_argument('--steps', type=int, default=25,
+    p.add_argument('--steps', type=int, default=50,
                    help='the number of timesteps')
     args = p.parse_args()
 
